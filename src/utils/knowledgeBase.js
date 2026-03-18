@@ -1,5 +1,5 @@
 export async function getKnowledgeBaseContent() {
-  const publishedUrl = process.env.KNOWLEDGE_BASE_URL;
+  const publishedUrl = process.env.KNOWLEDGE_BASE_URL?.trim();
   if (!publishedUrl) {
     return "No knowledge base configured. The KNOWLEDGE_BASE_URL environment variable is missing. Please provide a link to a published Google Doc or Google Sheets CSV.";
   }

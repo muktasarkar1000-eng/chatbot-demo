@@ -1,9 +1,11 @@
 import OpenAI from "openai";
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Helper to get OpenAI client with trimmed key
+function getOpenAIClient() {
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY?.trim(),
+  });
+}
 
 export async function generateChatResponse(messages, context) {
   try {
@@ -22,6 +24,7 @@ Instructions:
 `
     };
 
+    const openai = getOpenAIClient();
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini", // Recommended for speed and cost efficiency in demos
       messages: [systemPrompt, ...messages],
