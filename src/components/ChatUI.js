@@ -39,7 +39,7 @@ export default function ChatUI() {
       const data = await response.json();
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.reply },
+        { role: "assistant", content: data.reply || `Error: ${data.details || 'Unknown'}` },
       ]);
     } catch (error) {
       console.error(error);
