@@ -35,6 +35,6 @@ Instructions:
     return completion.choices[0].message.content;
   } catch (error) {
     console.error("OpenAI error:", error);
-    throw new Error("Failed to generate response from OpenAI");
+    throw new Error(error.message || "Failed to generate response from OpenAI");
   }
 }
