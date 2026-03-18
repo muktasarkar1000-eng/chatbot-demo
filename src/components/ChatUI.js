@@ -34,18 +34,21 @@ export default function ChatUI() {
         }),
       });
 
-      if (!response.ok) throw new Error("API response error");
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.details || errorData.error || "API response error");
+      }
 
       const data = await response.json();
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.reply || `Error: ${data.details || 'Unknown'}` },
+        { role: "assistant", content: data.reply },
       ]);
     } catch (error) {
       console.error(error);
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "Sorry, I encountered an error answering your question." },
+        { role: "assistant", content: `Error: ${error.message || "Sorry, I encountered an error answering your question."}` },
       ]);
     } finally {
       setLoading(false);
